@@ -1,5 +1,5 @@
-// const clientId = "d2a8ebf8eb404bf99c359f1750373f54"; // LOC MAI BALLS
-const clientId = "ce688dc38ebd4048bd897ab33551b980"; // TLAI
+const clientId = "d2a8ebf8eb404bf99c359f1750373f54"; // LOC MAI BALLS
+// const clientId = "ce688dc38ebd4048bd897ab33551b980"; // TLAI
 
 window.onload = async () => {
   let accessToken = localStorage.getItem("spotify_access_token");
