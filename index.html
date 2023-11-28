@@ -5,7 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <script src="src/script.js" type="module"></script>
+    <script src="src/script.ts" type="module"></script>
 
     <script src="https://download.affectiva.com/js/3.2.1/affdex.js"></script>
 
@@ -41,12 +41,14 @@
 
         //Add a callback to notify when the detector is initialized and ready for runing.
         detector.addEventListener("onInitializeSuccess", function () {
-          document.getElementById("results").innerHTML = "The detector reports initialized";
+          document.getElementById("results").innerHTML =
+            "The detector reports initialized";
         });
 
         //Add a callback to notify when camera access is allowed
         detector.addEventListener("onWebcamConnectSuccess", function () {
-          document.getElementById("results").innerHTML = "Webcam access allowed";
+          document.getElementById("results").innerHTML =
+            "Webcam access allowed";
         });
 
         //Add a callback to notify when camera access is denied
@@ -57,7 +59,8 @@
 
         //Add a callback to notify when detector is stopped
         detector.addEventListener("onStopSuccess", function () {
-          document.getElementById("results").innerHTML = "The detector reports stopped";
+          document.getElementById("results").innerHTML =
+            "The detector reports stopped";
           document.getElementById("results").innerHTML = "";
         });
 
@@ -69,17 +72,22 @@
           function (faces, image, timestamp) {
             document.getElementById("results").innerHTML = "";
             if (faces.length > 0) {
-              document.getElementById("results").innerHTML += "Appearance: " + JSON.stringify(faces[0].appearance);
-              document.getElementById("results").innerHTML += "Emotions: " +
-                  JSON.stringify(faces[0].emotions, function (key, val) {
-                    return val.toFixed ? Number(val.toFixed(0)) : val;
-                  });
-                  document.getElementById("results").innerHTML += 
+              document.getElementById("results").innerHTML +=
+                "Appearance: " + JSON.stringify(faces[0].appearance) + "<br />";
+              document.getElementById("results").innerHTML +=
+                "Emotions: " +
+                JSON.stringify(faces[0].emotions, function (key, val) {
+                  return val.toFixed ? Number(val.toFixed(0)) : val;
+                }) +
+                "<br />";
+              document.getElementById("results").innerHTML +=
                 "Expressions: " +
-                  JSON.stringify(faces[0].expressions, function (key, val) {
-                    return val.toFixed ? Number(val.toFixed(0)) : val;
-                  });
-                  document.getElementById("results").innerHTML += "Emoji: " + faces[0].emojis.dominantEmoji;
+                JSON.stringify(faces[0].expressions, function (key, val) {
+                  return val.toFixed ? Number(val.toFixed(0)) : val;
+                }) +
+                "<br />";
+              document.getElementById("results").innerHTML +=
+                "Emoji: " + faces[0].emojis.dominantEmoji;
 
               // Primitive text UI for happy
               if (faces[0].emotions["joy"] > 75) {
@@ -114,8 +122,9 @@
     <title>Nonwimp Test</title>
   </head>
   <body>
-
-    <section style="width: 700px; display: flex; margin: auto; flex-direction: column;">
+    <section
+      style="width: 700px; display: flex; margin: auto; flex-direction: column"
+    >
       <div>
         <h3>Affectiva JS SDK CameraDetector to track different emotions.</h3>
         <p>
@@ -135,12 +144,25 @@
         <div id="affdex_elements" style="width: 680px; height: 480px"></div>
         <div style="height: 15em">
           <strong>Emotion Tracking Results</strong>
-          <div id="myuitext" style="color:red;"></div>
+          <div id="myuitext" style="color: red"></div>
           <br />
           <div id="results" style="word-wrap: break-word"></div>
         </div>
       </div>
     </section>
 
+    <section id="profile"
+      style="width: 700px; display: flex; margin: auto; flex-direction: column"
+    >
+      <h2>Logged in as <span id="displayName"></span></h2>
+      <span id="avatar"></span>
+      <ul>
+        <li>User ID: <span id="id"></span></li>
+        <li>Email: <span id="email"></span></li>
+        <li>Spotify URI: <a id="uri" href="#"></a></li>
+        <li>Link: <a id="url" href="#"></a></li>
+        <li>Profile Image: <span id="imgUrl"></span></li>
+      </ul>
+    </section>
   </body>
 </html>
