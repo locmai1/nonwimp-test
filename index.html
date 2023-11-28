@@ -41,26 +41,23 @@
 
         //Add a callback to notify when the detector is initialized and ready for runing.
         detector.addEventListener("onInitializeSuccess", function () {
-          log("logs", "The detector reports initialized");
-          //Display canvas instead of video feed because we want to draw the feature points on it
-          document.getElementById("face_video_canvas").style.display = "block";
-          document.getElementById("face_video").style.display = "none";
+          document.getElementById("results").innerHTML = "The detector reports initialized";
         });
 
         //Add a callback to notify when camera access is allowed
         detector.addEventListener("onWebcamConnectSuccess", function () {
-          log("logs", "Webcam access allowed");
+          document.getElementById("results").innerHTML = "Webcam access allowed";
         });
 
         //Add a callback to notify when camera access is denied
         detector.addEventListener("onWebcamConnectFailure", function () {
-          log("logs", "webcam denied");
+          document.getElementById("results").innerHTML = "webcam denied";
           console.log("Webcam access denied");
         });
 
         //Add a callback to notify when detector is stopped
         detector.addEventListener("onStopSuccess", function () {
-          log("logs", "The detector reports stopped");
+          document.getElementById("results").innerHTML = "The detector reports stopped";
           document.getElementById("results").innerHTML = "";
         });
 
@@ -71,28 +68,18 @@
           "onImageResultsSuccess",
           function (faces, image, timestamp) {
             document.getElementById("results").innerHTML = "";
-            log("results", "Timestamp: " + timestamp.toFixed(2));
             if (faces.length > 0) {
-              log(
-                "results",
-                "Appearance: " + JSON.stringify(faces[0].appearance)
-              );
-              log(
-                "results",
-                "Emotions: " +
+              document.getElementById("results").innerHTML += "Appearance: " + JSON.stringify(faces[0].appearance);
+              document.getElementById("results").innerHTML += "Emotions: " +
                   JSON.stringify(faces[0].emotions, function (key, val) {
                     return val.toFixed ? Number(val.toFixed(0)) : val;
-                  })
-              );
-              log(
-                "results",
+                  });
+                  document.getElementById("results").innerHTML += 
                 "Expressions: " +
                   JSON.stringify(faces[0].expressions, function (key, val) {
                     return val.toFixed ? Number(val.toFixed(0)) : val;
-                  })
-              );
-              log("results", "Emoji: " + faces[0].emojis.dominantEmoji);
-              drawFeaturePoints(image, faces[0].featurePoints);
+                  });
+                  document.getElementById("results").innerHTML += "Emoji: " + faces[0].emojis.dominantEmoji;
 
               // Primitive text UI for happy
               if (faces[0].emotions["joy"] > 75) {
@@ -100,117 +87,36 @@
               } else {
                 document.getElementById("myuitext").innerHTML = "";
               }
-
-              // Now update the graphic UI
-              let c = document.getElementById("myuicanvas");
-              let gc = c.getContext("2d");
-              gc.clearRect(0, 0, c.width, c.height);
-
-              // Background
-              gc.fillStyle = "lightblue";
-              gc.beginPath();
-              gc.rect(0, 0, c.width, c.height);
-              gc.fill();
-              gc.closePath();
-
-              // Ball rises/falls based on amount of smile
-              let rad = 50;
-              let y =
-                c.height -
-                rad -
-                (faces[0].expressions["smile"] * (c.height - 2 * rad)) / 100;
-
-              // Draw the ball at appropriate y height
-              gc.fillStyle = "red";
-              gc.beginPath();
-              gc.arc(c.width / 2, y, rad, 0, 2 * Math.PI);
-              gc.fill();
-              gc.closePath();
             }
           }
         );
-
-        //Draw the detected facial feature points on the image
-        function drawFeaturePoints(img, featurePoints) {
-          let c = document.getElementById("face_video_canvas");
-          if (c == null) return;
-          let contxt = c.getContext("2d");
-
-          let hRatio = contxt.canvas.width / img.width;
-          let vRatio = contxt.canvas.height / img.height;
-          let ratio = Math.min(hRatio, vRatio);
-
-          contxt.strokeStyle = "#FFFFFF";
-          for (let id in featurePoints) {
-            contxt.beginPath();
-            contxt.arc(
-              featurePoints[id].x,
-              featurePoints[id].y,
-              2,
-              0,
-              2 * Math.PI
-            );
-            contxt.stroke();
-          }
-        }
       };
 
       //function executes when Start button is pushed.
       function onStart() {
         if (detector && !detector.isRunning) {
           document.getElementById("results").innerHTML = "";
-          document.getElementById("logs").innerHTML = "";
           detector.start();
         }
-        log("logs", "Clicked the start button");
+        console.log("Clicked the start button");
       }
 
       //function executes when the Stop button is pushed.
       function onStop() {
-        log("logs", "Clicked the stop button");
+        console.log("Clicked the stop button");
         if (detector && detector.isRunning) {
           detector.removeEventListener();
           detector.stop();
         }
       }
-
-      //function executes when the Reset button is pushed.
-      function onReset() {
-        log("logs", "Clicked the reset button");
-        if (detector && detector.isRunning) {
-          detector.reset();
-          document.getElementById("results").innerHTML = "";
-        }
-      }
-
-      function log(node_name, msg) {
-        document.getElementById(node_name).innerHTML +=
-          "<span>" + msg + "</span><br/>";
-      }
     </script>
 
-    <title>Spotify Track Test</title>
+    <title>Nonwimp Test</title>
   </head>
   <body>
-    <h1>Display your Spotify profile data</h1>
 
-    <section id="profile">
-      <h2>Logged in as <span id="displayName"></span></h2>
-      <span id="avatar"></span>
-      <ul>
-        <li>User ID: <span id="id"></span></li>
-        <li>Email: <span id="email"></span></li>
-        <li>Spotify URI: <a id="uri" href="#"></a></li>
-        <li>Link: <a id="url" href="#"></a></li>
-        <li>Profile Image: <span id="imgUrl"></span></li>
-      </ul>
-    </section>
-
-    <section>
+    <section style="width: 700px; display: flex; margin: auto; flex-direction: column;">
       <div>
-        <button id="start" onclick="onStart()">Start</button>
-        <button id="stop" onclick="onStop()">Stop</button>
-        <button id="reset" onclick="onReset()">Reset</button>
         <h3>Affectiva JS SDK CameraDetector to track different emotions.</h3>
         <p>
           <strong>Instructions</strong>
@@ -221,30 +127,20 @@
           are written to the DOM. <br />
           Press the stop button to end the detector.
         </p>
+        <button id="start" onclick="onStart()">Start</button>
+        <button id="stop" onclick="onStop()">Stop</button>
       </div>
 
       <div>
         <div id="affdex_elements" style="width: 680px; height: 480px"></div>
-        <div>
-          <div>
-            <br /><br />
-            <strong>Example text and graphic UIs</strong>
-            <br /><br />
-            <div id="myuitext" style="color: red"></div>
-            <br /><br />
-            <canvas id="myuicanvas" width="300" height="300"></canvas>
-            <br /><br />
-          </div>
-        </div>
-        <div style="height: 25em">
+        <div style="height: 15em">
           <strong>Emotion Tracking Results</strong>
+          <div id="myuitext" style="color:red;"></div>
+          <br />
           <div id="results" style="word-wrap: break-word"></div>
-        </div>
-        <div>
-          <strong>Detector Log Msgs</strong>
-          <div id="logs"></div>
         </div>
       </div>
     </section>
+
   </body>
 </html>
