@@ -25,6 +25,8 @@ window.onload = function () {
     affdex.FaceDetectorMode.LARGE_FACES
   );
 
+  divRoot.classList.add("flipped");
+
   //Enable detection of all Expressions, Emotions and Emojis classifiers.
   detector.detectAllEmotions();
   detector.detectAllExpressions();
