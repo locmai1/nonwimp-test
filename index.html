@@ -7,173 +7,9 @@
 
     <script src="src/script.ts" type="module"></script>
 
-    <script src="https://download.affectiva.com/js/3.2.1/affdex.js"></script>
-
-    <script>
-      /*
-       * Must run on a remote server, and access via https not http.
-       */
-
-      // Make this global so callback functions can access
-      var detector;
-
-      window.onload = function () {
-        // SDK Needs to create video and canvas nodes in the DOM in order to function
-        // Here we are adding those nodes a predefined div.
-        let divRoot = document.getElementById("affdex_elements");
-
-        let width = 640;
-        let height = 480;
-
-        //Construct a CameraDetector and specify the image width / height and face detector mode.
-        detector = new affdex.CameraDetector(
-          divRoot,
-          width,
-          height,
-          affdex.FaceDetectorMode.LARGE_FACES
-        );
-
-        //Enable detection of all Expressions, Emotions and Emojis classifiers.
-        detector.detectAllEmotions();
-        detector.detectAllExpressions();
-        detector.detectAllEmojis();
-        detector.detectAllAppearance();
-
-        //Add a callback to notify when the detector is initialized and ready for runing.
-        detector.addEventListener("onInitializeSuccess", function () {
-          document.getElementById("results").innerHTML =
-            "The detector reports initialized";
-        });
-
-        //Add a callback to notify when camera access is allowed
-        detector.addEventListener("onWebcamConnectSuccess", function () {
-          document.getElementById("results").innerHTML =
-            "Webcam access allowed";
-        });
-
-        //Add a callback to notify when camera access is denied
-        detector.addEventListener("onWebcamConnectFailure", function () {
-          document.getElementById("results").innerHTML = "webcam denied";
-          console.log("Webcam access denied");
-        });
-
-        //Add a callback to notify when detector is stopped
-        detector.addEventListener("onStopSuccess", function () {
-          document.getElementById("results").innerHTML =
-            "The detector reports stopped";
-          document.getElementById("results").innerHTML = "";
-        });
-
-        //Add a callback to receive the results from processing an image.
-        //The faces object contains the list of the faces detected in an image.
-        //Faces object contains probabilities for all the different expressions, emotions and appearance metrics
-        detector.addEventListener(
-          "onImageResultsSuccess",
-          function (faces, image, timestamp) {
-            document.getElementById("results").innerHTML = "";
-            if (faces.length > 0) {
-              // document.getElementById("results").innerHTML +=
-              //   "Appearance: " + JSON.stringify(faces[0].appearance) + "<br />";
-
-              const emotions = faces[0].emotions;
-
-              // Extract the first 6 key-value pairs
-              const firstSixEmotions = Object.fromEntries(
-                Object.entries(emotions).slice(0, 6)
-              );
-
-              // Find the top emotion based on values
-              const topEmotion = Object.keys(firstSixEmotions).reduce((a, b) =>
-                firstSixEmotions[a] > firstSixEmotions[b] ? a : b
-              );
-
-              // Check if all first 6 emotion values are 0
-              const allZeros = Object.values(firstSixEmotions).every(
-                (value) => value === 0
-              );
-
-              // Display the result
-              if (allZeros) {
-                document.getElementById("results").innerHTML +=
-                  "Emotion: Normal<br />";
-              } else {
-                document.getElementById("results").innerHTML +=
-                  "Top Emotion: " +
-                  topEmotion +
-                  " - " +
-                  emotions[topEmotion].toFixed(0) +
-                  "%<br />";
-              }
-
-              // document.getElementById("results").innerHTML +=
-              //   "Expressions: " +
-              //   JSON.stringify(faces[0].expressions, function (key, val) {
-              //     return val.toFixed ? Number(val.toFixed(0)) : val;
-              //   }) +
-              //   "<br />";
-              // document.getElementById("results").innerHTML +=
-              //   "Emoji: " + faces[0].emojis.dominantEmoji;
-
-              // if (faces[0].emotions["joy"] > 75) {
-              //   document.getElementById("myuitext").innerHTML = "Happy!!!";
-              // } else {
-              //   document.getElementById("myuitext").innerHTML = "";
-              // }
-            }
-          }
-        );
-      };
-
-      //function executes when Start button is pushed.
-      function onStart() {
-        if (detector && !detector.isRunning) {
-          document.getElementById("results").innerHTML = "";
-          detector.start();
-        }
-        console.log("Clicked the start button");
-      }
-
-      //function executes when the Stop button is pushed.
-      function onStop() {
-        console.log("Clicked the stop button");
-        if (detector && detector.isRunning) {
-          detector.removeEventListener();
-          detector.stop();
-        }
-      }
-    </script>
-
     <title>Nonwimp Test</title>
   </head>
   <body>
-    <section
-      style="width: 700px; display: flex; margin: auto; flex-direction: column"
-    >
-      <div>
-        <h3>Affectiva JS SDK CameraDetector to track different emotions.</h3>
-        <p>
-          <strong>Instructions</strong>
-          <br />
-          Press the start button to start the detector.
-          <br />
-          When a face is detected, the probabilities of the different emotions
-          are written to the DOM. <br />
-          Press the stop button to end the detector.
-        </p>
-        <button id="start" onclick="onStart()">Start</button>
-        <button id="stop" onclick="onStop()">Stop</button>
-      </div>
-
-      <div>
-        <div id="affdex_elements" style="width: 680px; height: 480px"></div>
-        <div>
-          <strong>Emotion Tracking Results</strong>
-          <div id="myuitext" style="color: red"></div>
-          <br />
-          <div id="results" style="word-wrap: break-word"></div>
-        </div>
-      </div>
-    </section>
 
     <section
       id="profile"
@@ -188,6 +24,10 @@
         <li>Link: <a id="url" href="#"></a></li>
         <li>Profile Image: <span id="imgUrl"></span></li>
       </ul>
+      <a href="./emotion.html">
+        Emotion Detector
+      </a>
     </section>
+
   </body>
 </html>
