@@ -4,7 +4,21 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <style>
+      #profile {
+          display: none; /* Hide the profile section initially */
+          width: 700px; 
+          margin: auto; 
+          flex-direction: column;
+      }
+      #loginSection {
+          width: 700px; 
+          display: flex; 
+          margin: auto; 
+          flex-direction: column;
+      }
+      /* Add other styles as needed */
+    </style>
     <script src="https://download.affectiva.com/js/3.2.1/affdex.js"></script>
 
     <script>
@@ -16,8 +30,13 @@
       var detector;
 
       window.onload = function () {
-        // SDK Needs to create video and canvas nodes in the DOM in order to function
-        // Here we are adding those nodes a predefined div.
+
+        const accessToken = localStorage.getItem("spotify_access_token");
+        if (!accessToken) {
+          window.location.href = '/'; 
+          return;
+        }
+
         let divRoot = document.getElementById("affdex_elements");
 
         let width = 640;

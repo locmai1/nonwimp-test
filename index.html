@@ -5,17 +5,36 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <link rel="stylesheet" href="src/style.css">
     <script src="src/script.ts" type="module"></script>
 
-    <title>Nonwimp Test</title>
+    <title>Spotify x Affectiva</title>
+    <style>
+      #profile {
+            display: none; /* Hide the profile section initially */
+            width: 700px; 
+            margin: auto; 
+            flex-direction: column;
+        }
+        #loginSection {
+            width: 700px; 
+            display: flex; 
+            margin: auto; 
+            flex-direction: column;
+        }
+    </style>
   </head>
   <body>
+    <section id="loginSection">
+      <div>
+          <h2>Spotify x Affectiva</h2>
+          <button id="loginButton">Login with Spotify</button>
+      </div>
+   </section>
 
-    <section
-      id="profile"
-      style="width: 700px; display: flex; margin: auto; flex-direction: column"
-    >
+    <section id="profile">
       <h2>Logged in as <span id="displayName"></span></h2>
+      <button id="signOutButton">Sign out</button>
       <span id="avatar"></span>
       <ul>
         <li>User ID: <span id="id"></span></li>
@@ -27,6 +46,7 @@
       <a href="./emotion.html">
         Emotion Detector
       </a>
+      
     </section>
 
   </body>
