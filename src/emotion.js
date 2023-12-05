@@ -147,7 +147,16 @@ function fetchSpotifyRecommendations(seedGenres) {
   }
 
   const apiUrl = `https://api.spotify.com/v1/recommendations?limit=3&seed_artists=${encodeURIComponent(seedArtists)}&seed_genres=${encodeURIComponent(seedGenres)}&seed_tracks=${encodeURIComponent(seedTracks)}`;
-
+  const genres = `https://api.spotify.com/v1/recommendations/available-genre-seeds`;
+  fetch(genres, {
+    method: 'GET',
+    headers: {
+        'Authorization': `Bearer ${accessToken}`
+    }
+  }).then(response => response.json())
+  .then(data => {
+    console.log(data);
+  })
   fetch(apiUrl, {
       method: 'GET',
       headers: {
@@ -161,6 +170,12 @@ function fetchSpotifyRecommendations(seedGenres) {
       document.getElementById("card1-title").innerHTML = data.tracks[0].name;
       document.getElementById("card2-title").innerHTML = data.tracks[1].name;
       document.getElementById("card3-title").innerHTML = data.tracks[2].name;
+      document.getElementById("artist1").innerHTML = data.tracks[0].artists[0].name;
+      document.getElementById("artist2").innerHTML = data.tracks[1].artists[0].name;
+      document.getElementById("artist3").innerHTML = data.tracks[2].artists[0].name;
+      document.getElementById("card-img1").src = data.tracks[0].album.images[0].url;
+      document.getElementById("card-img2").src = data.tracks[1].album.images[0].url;
+      document.getElementById("card-img3").src = data.tracks[2].album.images[0].url;
   })
   .catch(error => {
       console.error('Error fetching recommendations from Spotify:', error);
