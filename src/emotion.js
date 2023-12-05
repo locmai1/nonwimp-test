@@ -134,3 +134,31 @@ function onStop() {
     detector.stop();
   }
 }
+
+// Function to fetch recommendations from Spotify
+function fetchSpotifyRecommendations(seedGenres) {
+  seedArtists = '4NHQUGzhtTLFvgF5SZesLK'
+  seedGenres = 'pop'
+  seedTracks = '0c6xIDDpzE81m2q797ordA'
+  const accessToken = localStorage.getItem("spotify_access_token");
+  if (!accessToken) {
+      console.error("No access token available for Spotify API call.");
+      return;
+  }
+
+  const apiUrl = `https://api.spotify.com/v1/recommendations?limit=3&seed_artists=${encodeURIComponent(seedArtists)}&seed_genres=${encodeURIComponent(seedGenres)}&seed_tracks=${encodeURIComponent(seedTracks)}`;
+
+  fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+          'Authorization': `Bearer ${accessToken}`
+      }
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log('Spotify recommendations:', data);
+  })
+  .catch(error => {
+      console.error('Error fetching recommendations from Spotify:', error);
+  });
+}
