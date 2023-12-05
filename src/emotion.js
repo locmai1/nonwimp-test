@@ -156,7 +156,11 @@ function fetchSpotifyRecommendations(seedGenres) {
   })
   .then(response => response.json())
   .then(data => {
+
       console.log('Spotify recommendations:', data);
+      document.getElementById("card1-title").innerHTML = data.tracks[0].name;
+      document.getElementById("card2-title").innerHTML = data.tracks[1].name;
+      document.getElementById("card3-title").innerHTML = data.tracks[2].name;
   })
   .catch(error => {
       console.error('Error fetching recommendations from Spotify:', error);
