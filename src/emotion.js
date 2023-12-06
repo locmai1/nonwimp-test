@@ -4,6 +4,7 @@
 
 // Make this global so callback functions can access
 var detector;
+var emotion;
 
 window.onload = function () {
   const accessToken = localStorage.getItem("spotify_access_token");
@@ -96,6 +97,8 @@ window.onload = function () {
             " - " +
             emotions[topEmotion].toFixed(0) +
             "%<br />";
+
+          emotion = topEmotion;
         }
 
         // document.getElementById("results").innerHTML +=
@@ -112,6 +115,13 @@ window.onload = function () {
         // } else {
         //   document.getElementById("myuitext").innerHTML = "";
         // }
+
+        // document.getElementById("results").innerHTML +=
+        //   "Emotions: " +
+        //   JSON.stringify(faces[0].emotions, function (key, val) {
+        //     return val.toFixed ? Number(val.toFixed(0)) : val;
+        //   }) +
+        //   "<br />";
       }
     }
   );
@@ -135,49 +145,71 @@ function onStop() {
   }
 }
 
-// Function to fetch recommendations from Spotify
-function fetchSpotifyRecommendations(seedGenres) {
-  seedArtists = '4NHQUGzhtTLFvgF5SZesLK'
-  seedGenres = 'pop'
-  seedTracks = '0c6xIDDpzE81m2q797ordA'
+// Function to fetch recommendations from Spotify based on emotion
+function fetchSpotifyRecommendations() {
   const accessToken = localStorage.getItem("spotify_access_token");
   if (!accessToken) {
-      console.error("No access token available for Spotify API call.");
-      return;
+    console.error("No access token available for Spotify API call.");
+    return;
   }
 
-  const apiUrl = `https://api.spotify.com/v1/recommendations?limit=3&seed_artists=${encodeURIComponent(seedArtists)}&seed_genres=${encodeURIComponent(seedGenres)}&seed_tracks=${encodeURIComponent(seedTracks)}`;
-  const genres = `https://api.spotify.com/v1/recommendations/available-genre-seeds`;
-  fetch(genres, {
-    method: 'GET',
-    headers: {
-        'Authorization': `Bearer ${accessToken}`
-    }
-  }).then(response => response.json())
-  .then(data => {
-    console.log(data);
-  })
-  fetch(apiUrl, {
-      method: 'GET',
-      headers: {
-          'Authorization': `Bearer ${accessToken}`
-      }
-  })
-  .then(response => response.json())
-  .then(data => {
+  // Map detected emotion to corresponding genre
+  const emotionToGenreMap = {
+    joy: "pop",
+    sadness: "blues",
+    disgust: "grindcore",
+    contempt: "grunge",
+    anger: "heavy-metal",
+    fear: "dark-ambient",
+    surprise: "experimental",
+  };
 
-      console.log('Spotify recommendations:', data);
+  // Get the corresponding genre for the detected emotion
+  const seedGenres = emotionToGenreMap[emotion.toLowerCase()];
+
+  if (!seedGenres) {
+    console.error("No corresponding genre found for the detected emotion.");
+    return;
+  }
+
+  const apiUrl = `https://api.spotify.com/v1/recommendations?limit=3&seed_genres=${encodeURIComponent(
+    seedGenres
+  )}`;
+
+  fetch(apiUrl, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Spotify recommendations:", data);
       document.getElementById("card1-title").innerHTML = data.tracks[0].name;
       document.getElementById("card2-title").innerHTML = data.tracks[1].name;
       document.getElementById("card3-title").innerHTML = data.tracks[2].name;
-      document.getElementById("artist1").innerHTML = data.tracks[0].artists[0].name;
-      document.getElementById("artist2").innerHTML = data.tracks[1].artists[0].name;
-      document.getElementById("artist3").innerHTML = data.tracks[2].artists[0].name;
-      document.getElementById("card-img1").src = data.tracks[0].album.images[0].url;
-      document.getElementById("card-img2").src = data.tracks[1].album.images[0].url;
-      document.getElementById("card-img3").src = data.tracks[2].album.images[0].url;
-  })
-  .catch(error => {
-      console.error('Error fetching recommendations from Spotify:', error);
-  });
+      document.getElementById("artist1").innerHTML =
+        data.tracks[0].artists[0].name;
+      document.getElementById("artist2").innerHTML =
+        data.tracks[1].artists[0].name;
+      document.getElementById("artist3").innerHTML =
+        data.tracks[2].artists[0].name;
+      document.getElementById("card-img1").src =
+        data.tracks[0].album.images[0].url;
+      document.getElementById("card-img2").src =
+        data.tracks[1].album.images[0].url;
+      document.getElementById("card-img3").src =
+        data.tracks[2].album.images[0].url;
+    })
+    .catch((error) => {
+      console.error("Error fetching recommendations from Spotify:", error);
+    });
 }
+
+// Call this function when you want to fetch recommendations based on the detected emotion
+function fetchRecommendationsBasedOnEmotion() {
+  // Replace 'yourDetectedEmotion' with the actual variable containing the detected emotion
+  fetchSpotifyRecommendations(yourDetectedEmotion);
+}
+
+// joy, sadness, disgust, contempt, anger, fear, surprise
