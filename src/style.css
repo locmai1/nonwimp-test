@@ -89,7 +89,6 @@ h1 {
 }
 
 header {
-  background-color: slateblue; /* Example background color, adjust as needed */
   justify-content: center;
   font-size: 12px; /* Larger font size for the app name */
   display: flex;
