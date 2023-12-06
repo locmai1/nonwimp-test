@@ -40,6 +40,7 @@ window.onload = async () => {
       populateUI(profile);
 
       document.getElementById("profile")!.style.display = "flex";
+      // document.getElementById("generator")!.style.display = "flex";
       document.getElementById("loginSection")!.style.display = "none";
     } catch (error) {
       console.error("Error fetching profile:", error);

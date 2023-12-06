@@ -1,170 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-        header {
-            background-color: slateblue; /* Example background color, adjust as needed */
-            justify-content: center;
-            font-size: 12px; /* Larger font size for the app name */
-            display: flex;
-            width: 100%;
-        }
-
-    
-
-        /* Container for the entire layout */
-        .container {
-            display: flex;
-            width: 100%;
-            height: 40%;
-
-        }
-
-        /* Left half with your content */
-        .left-half {
-            width: 50%;
-            padding: 20px; /* Add padding as needed */
-        }
-
-        /* Right half with 3 stacked interactive cards */
-        .right-half {
-            width: 50%;
-            background-color: lightgray; /* Add background color as desired */
-            display: flex;
-            position: relative;
-            flex-direction: column;
-            justify-content: center;
-            padding-right: 20px; /* Add padding to the right */
-        }
-
-        .card-container {
-            position: absolute; 
-        }
-
-        /* Style for each card */
-        .card {
-            width: 175px; /* Adjust the card width as needed */
-            height: 225px; /* Adjust the card height as needed */
-            margin: 20px; 
-            padding: 20px;
-            background-color: gray;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            text-align: center;
-            position: relative; /* Changed from absolute to relative */
-            backface-visibility: hidden; /* Hide the backface of the card */
-            transition: box-shadow 0.3s, background-color 0.3s; /* Smooth transition */
-            display: flex; /* Use flexbox for layout */
-            flex-direction: column; /* Stack items vertically */
-            justify-content: center; /* Center items vertically */
-            align-items: center; /* Center items horizontally */
-        }
-
-        .card img {
-            max-width: 80%; /* Maximum width is 100% of the card */
-            max-height: 80%; /* Maximum height is 100% of the card */
-        }
-
-        /* Style for the card title */
-        .card-title {
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
-
-        /* Hover effect to flip the card */
-        .card-container:hover .card {
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Larger shadow for highlight effect */
-            background-color: slateblue; /* Lighter background color on hover */
-        }
-        #profile {
-          display: none; /* Hide the profile section initially */
-          width: 700px; 
-          margin: auto; 
-          flex-direction: column;
-        }
-        #loginSection {
-            width: 700px; 
-            display: flex; 
-            margin: auto; 
-            flex-direction: column;
-        }
-
-
-    </style>
     <script src="https://download.affectiva.com/js/3.2.1/affdex.js"></script>
 
-    <link rel="stylesheet" href="src/style.css">
+    <link rel="stylesheet" href="src/style.css" />
     <script src="src/emotion.js"></script>
 
     <title>Nonwimp Test</title>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>FaceTracks</h1>
+      <h1>FaceTracks</h1>
     </header>
     <!-- Container for the layout -->
     <div class="container">
-        <!-- Left half with your content -->
-        <div class="left-half">
-            <section style="width: 700px; margin: auto; flex-direction: column">
-                <div>
-                    <h3>Affectiva JS SDK CameraDetector to track different emotions.</h3>
-                    <p>
-                        <strong>Instructions</strong>
-                        <br />
-                        Press the start button to start the detector.
-                        <br />
-                        When a face is detected, the probabilities of the different emotions
-                        are written to the DOM. <br />
-                        Press the stop button to end the detector.
-                    </p>
-                    <button id="start" onclick="onStart()">Start</button>
-                    <button id="stop" onclick="onStop()">Stop</button>
-                </div>
-
-                <div>
-                    <div id="affdex_elements" style="width: 680px; height: 480px"></div>
-                    <div>
-                        <strong>Top Emotion</strong>
-                        <div id="myuitext" style="color: red"></div>
-                        <br />
-                        <div id="results" style="word-wrap: break-word"></div>
-
-                        <button id="spotifyRecommendationsBtn" onclick="fetchSpotifyRecommendations('hi', 'hi', 'hi')">Get Spotify Recommendations</button>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- Right half with 3 nicely designed cards -->
-        <div class="right-half">
-          <div class="card-container" style="top: 50px; left: 50px;">
-                <div class="card">
-                    <h2 class="card-title" id="card1-title"></h2>
-                    <p id="artist1"></p>
-                    <img id="card-img1"/>
-
-                </div>
+      <!-- Left half with your content -->
+      <div class="left-half">
+        <section style="width: 700px; margin: auto; flex-direction: column">
+          <div>
+            <h3>
+              Affectiva JS SDK CameraDetector to track different emotions.
+            </h3>
+            <p>
+              <strong>Instructions</strong>
+              <br />
+              Press the start button to start the detector.
+              <br />
+              When a face is detected, the probabilities of the different
+              emotions are written to the DOM. <br />
+              Press the stop button to end the detector.
+            </p>
+            <button id="start" onclick="onStart()">Start</button>
+            <button id="stop" onclick="onStop()">Stop</button>
           </div>
-          <div class="card-container" style="top: 225px; left: 350px;">
-                <div class="card">
-                    <h2 class="card-title" id="card2-title"></h2>
-                    <p id="artist2"></p>
-                    <img id="card-img2"/>
 
-                </div>
-           </div>
-           <div class="card-container" style="top: 400px; left: 50px;">
-                <div class="card">
-                    <h2 class="card-title" id="card3-title"></h2>
-                    <p id="artist3"></p>
-                    <img id="card-img3"/>
-                </div>
+          <div>
+            <div id="affdex_elements" style="width: 680px; height: 480px"></div>
+            <div>
+              <strong>Top Emotion</strong>
+              <div id="myuitext" style="color: red"></div>
+              <br />
+              <div id="results" style="word-wrap: break-word"></div>
+
+              <button
+                id="spotifyRecommendationsBtn"
+                onclick="fetchSpotifyRecommendations('hi', 'hi', 'hi')"
+              >
+                Get Spotify Recommendations
+              </button>
             </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Right half with 3 nicely designed cards -->
+      <div class="right-half">
+        <div class="card-container" style="top: 50px; left: 50px">
+          <div class="card">
+            <h2 class="card-title" id="card1-title"></h2>
+            <p id="artist1"></p>
+            <img id="card-img1" />
+          </div>
+        </div>
+        <div class="card-container" style="top: 225px; left: 350px">
+          <div class="card">
+            <h2 class="card-title" id="card2-title"></h2>
+            <p id="artist2"></p>
+            <img id="card-img2" />
+          </div>
+        </div>
+        <div class="card-container" style="top: 400px; left: 50px">
+          <div class="card">
+            <h2 class="card-title" id="card3-title"></h2>
+            <p id="artist3"></p>
+            <img id="card-img3" />
+          </div>
+        </div>
       </div>
     </div>
-</body>
+  </body>
 </html>

@@ -5,34 +5,18 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="src/style.css">
+    <link rel="stylesheet" href="src/style.css" />
     <script src="src/script.ts" type="module"></script>
 
-    <title>Spotify x Affectiva</title>
-    <style>
-      #profile {
-            display: none; /* Hide the profile section initially */
-            width: 700px; 
-            margin: auto; 
-            flex-direction: column;
-        }
-        #loginSection {
-            width: 700px; 
-            display: flex; 
-            margin: auto; 
-            flex-direction: column;
-            text-align: center;
-            align-items: center;
-        }
-    </style>
+    <title>FaceTracks</title>
   </head>
   <body>
     <section id="loginSection">
       <div>
-          <h2>Spotify x Affectiva</h2>
-          <button id="loginButton">Login with Spotify</button>
+        <h2>FaceTracks</h2>
+        <button id="loginButton">Login with Spotify</button>
       </div>
-   </section>
+    </section>
 
     <section id="profile">
       <h2>Logged in as <span id="displayName"></span></h2>
@@ -45,11 +29,7 @@
         <li>Link: <a id="url" href="#"></a></li>
         <li>Profile Image: <span id="imgUrl"></span></li>
       </ul>
-      <a href="./emotion.html">
-        Emotion Detector
-      </a>
-      
+      <a href="./emotion.html"> Emotion Detector </a>
     </section>
-
   </body>
 </html>
