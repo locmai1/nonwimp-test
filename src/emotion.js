@@ -7,6 +7,15 @@ var detector;
 var emotion;
 
 window.onload = function () {
+  const signOutButton = document.getElementById("signOutButton");
+  if (signOutButton) {
+    signOutButton.addEventListener("click", () => {
+      localStorage.removeItem("spotify_access_token");
+      localStorage.removeItem("spotify_refresh_token");
+      window.location.href = "/";
+    });
+  }
+  
   const accessToken = localStorage.getItem("spotify_access_token");
   if (!accessToken) {
     window.location.href = "/";
@@ -144,6 +153,8 @@ function onStop() {
     detector.stop();
   }
 }
+
+
 
 // Function to fetch recommendations from Spotify based on emotion
 function fetchSpotifyRecommendations() {

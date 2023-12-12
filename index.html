@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="src/style.css" />
+  <script src="src/script.ts" type="module"></script>
+  <title>FaceTracks</title>
+</head>
+<body>
+  <section id="loginSection">
+    <div>
+      <h2>FaceTracks</h2>
+      <button id="loginButton">Login with Spotify</button>
+    </div>
+  </section>
 
-    <link rel="stylesheet" href="src/style.css" />
-    <script src="src/script.ts" type="module"></script>
+  <!-- Profile section can be uncommented and used later -->
+  <!-- <section id="profile">...</section> -->
+</body>
+</html>
 
-    <title>FaceTracks</title>
-  </head>
-  <body>
-    <section id="loginSection">
-      <div>
-        <h2>FaceTracks</h2>
-        <button id="loginButton">Login with Spotify</button>
-      </div>
-    </section>
-
-    <section id="profile">
+    <!-- <section id="profile">
       <h2>Logged in as <span id="displayName"></span></h2>
       <button id="signOutButton">Sign out</button>
       <span id="avatar"></span>
@@ -29,7 +32,4 @@
         <li>Link: <a id="url" href="#"></a></li>
         <li>Profile Image: <span id="imgUrl"></span></li>
       </ul>
-      <a href="./emotion.html"> Emotion Detector </a>
-    </section>
-  </body>
-</html>
+    </section> -->

@@ -95,6 +95,21 @@ header {
   width: 100%;
 }
 
+#signOutButton {
+  position: absolute;  /* Use absolute positioning */
+  top: 10px;           /* Distance from the top of the page */
+  right: 10px;         /* Distance from the right side of the page */
+  /* Additional styling (optional) */
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Other styles for your HTML elements can be added here */
+
+
 
 
 /* Container for the entire layout */
@@ -176,6 +191,7 @@ button {
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
