@@ -2,80 +2,100 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://download.affectiva.com/js/3.2.1/affdex.js"></script>
-
-    <link rel="stylesheet" href="src/style.css" />
     <script src="src/emotion.js"></script>
+    <title>FaceTracks</title>
+    <style>
+      body {
+        margin: 0;
+        place-items: center;
+        flex-direction: column;
+        font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
+        color: rgba(255, 255, 255, 0.87);
+        background-color: #242424;
+      }
 
-    <title>Nonwimp Test</title>
+      .left-half {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      section {
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        background-color: #333;
+        margin-bottom: 20px;
+      }
+
+      button {
+        border-radius: 8px;
+        border: 1px solid transparent;
+        padding: 0.6em 1.2em;
+        font-size: 1em;
+        font-weight: 500;
+        font-family: inherit;
+        background-color: #1a1a1a;
+        cursor: pointer;
+        transition: background-color 0.25s;
+        color: white;
+        margin-top: 10px;
+      }
+
+      button:hover {
+        background-color: #535bf2;
+      }
+
+      video {
+        width: 100%;
+        max-width: 350px;
+        display: flex;
+        margin: auto;
+        height: 100%;
+      }
+
+      #affdex_elements {
+        height: 300px;
+      }
+
+      #results {
+        height: 30px;
+      }
+
+      .detection-container {
+        width: 90%;
+        max-width: 400px;
+      }
+    </style>
   </head>
   <body>
-    <header>
-      <h1>FaceTracks</h1>
-      <button id="signOutButton">Sign out</button> <!-- Moved button here -->
-    </header>
-    <!-- Container for the layout -->
-    <div class="container">
-      <!-- Left half with your content -->
-      <div class="left-half">
-        <section style="width: 700px; margin: auto; flex-direction: column">
-          <div>
-            <p>
-              <strong>Instructions</strong>
-              <br />
-              Press the start button to start the detector.
-              <br />
-              Press the stop button to end the detector.
-            </p>
-            <button id="start" onclick="onStart()">Start</button>
-            <button id="stop" onclick="onStop()">Stop</button>
-          </div>
+    <div class="left-half">
+      <section class="detection-container">
+        <p>
+          <strong>Instructions</strong><br /><br />
+          Press the start button to start the detector.<br />
+          Press the stop button to end the detector.
+        </p>
+        <button id="start" onclick="onStart()">Start</button>
+        <button id="stop" onclick="onStop()">Stop</button>
 
-          <div>
-            <div id="affdex_elements" style="width: 680px; height: 480px"></div>
-            <div>
-              <strong>Top Emotion</strong>
-              <div id="myuitext" style="color: red"></div>
-              <br />
-              <div id="results" style="word-wrap: break-word"></div>
+        <div id="affdex_elements"></div>
+        <strong>Top Emotion</strong>
+        <br />
+        <br />
+        <div id="results"></div>
 
-              <button
-                id="spotifyRecommendationsBtn"
-                onclick="fetchSpotifyRecommendations('hi', 'hi', 'hi')"
-              >
-                Get Spotify Recommendations
-              </button>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <!-- Right half with 3 nicely designed cards -->
-      <div class="right-half">
-        <div class="card-container" style="top: 50px; left: 50px">
-          <div class="card">
-            <h2 class="card-title" id="card1-title"></h2>
-            <p id="artist1"></p>
-            <img id="card-img1" />
-          </div>
-        </div>
-        <div class="card-container" style="top: 225px; left: 350px">
-          <div class="card">
-            <h2 class="card-title" id="card2-title"></h2>
-            <p id="artist2"></p>
-            <img id="card-img2" />
-          </div>
-        </div>
-        <div class="card-container" style="top: 400px; left: 50px">
-          <div class="card">
-            <h2 class="card-title" id="card3-title"></h2>
-            <p id="artist3"></p>
-            <img id="card-img3" />
-          </div>
-        </div>
-      </div>
+        <button
+          id="spotifyRecommendationsBtn"
+          onclick="fetchSpotifyRecommendations()"
+        >
+          Get Spotify Recommendations
+        </button>
+      </section>
     </div>
   </body>
 </html>

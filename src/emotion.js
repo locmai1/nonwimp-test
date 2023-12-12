@@ -1,8 +1,3 @@
-/*
- * Must run on a remote server, and access via https not http.
- */
-
-// Make this global so callback functions can access
 var detector;
 var emotion;
 
@@ -15,7 +10,7 @@ window.onload = function () {
       window.location.href = "/";
     });
   }
-  
+
   const accessToken = localStorage.getItem("spotify_access_token");
   if (!accessToken) {
     window.location.href = "/";
@@ -75,68 +70,33 @@ window.onload = function () {
     function (faces, image, timestamp) {
       document.getElementById("results").innerHTML = "";
       if (faces.length > 0) {
-        // document.getElementById("results").innerHTML +=
-        //   "Appearance: " + JSON.stringify(faces[0].appearance) + "<br />";
-
         const emotions = faces[0].emotions;
 
-        // Extract the first 6 key-value pairs
         const firstSixEmotions = Object.fromEntries(
           Object.entries(emotions).slice(0, 6)
         );
 
-        // Find the top emotion based on values
         const topEmotion = Object.keys(firstSixEmotions).reduce((a, b) =>
           firstSixEmotions[a] > firstSixEmotions[b] ? a : b
         );
 
-        // Check if all first 6 emotion values are 0
         const allZeros = Object.values(firstSixEmotions).every(
           (value) => value === 0
         );
 
-        // Display the result
         if (allZeros) {
-          document.getElementById("results").innerHTML +=
-            "Top Emotion: normal<br />";
+          document.getElementById("results").innerHTML += "normal<br />";
         } else {
           document.getElementById("results").innerHTML +=
-            "Top Emotion: " +
-            topEmotion +
-            " - " +
-            emotions[topEmotion].toFixed(0) +
-            "%<br />";
+            topEmotion + " - " + emotions[topEmotion].toFixed(0) + "%<br />";
 
           emotion = topEmotion;
         }
-
-        // document.getElementById("results").innerHTML +=
-        //   "Expressions: " +
-        //   JSON.stringify(faces[0].expressions, function (key, val) {
-        //     return val.toFixed ? Number(val.toFixed(0)) : val;
-        //   }) +
-        //   "<br />";
-        // document.getElementById("results").innerHTML +=
-        //   "Emoji: " + faces[0].emojis.dominantEmoji;
-
-        // if (faces[0].emotions["joy"] > 75) {
-        //   document.getElementById("myuitext").innerHTML = "Happy!!!";
-        // } else {
-        //   document.getElementById("myuitext").innerHTML = "";
-        // }
-
-        // document.getElementById("results").innerHTML +=
-        //   "Emotions: " +
-        //   JSON.stringify(faces[0].emotions, function (key, val) {
-        //     return val.toFixed ? Number(val.toFixed(0)) : val;
-        //   }) +
-        //   "<br />";
       }
     }
   );
 };
 
-//function executes when Start button is pushed.
 function onStart() {
   if (detector && !detector.isRunning) {
     document.getElementById("results").innerHTML = "";
@@ -145,7 +105,6 @@ function onStart() {
   console.log("Clicked the start button");
 }
 
-//function executes when the Stop button is pushed.
 function onStop() {
   console.log("Clicked the stop button");
   if (detector && detector.isRunning) {
@@ -154,9 +113,6 @@ function onStop() {
   }
 }
 
-
-
-// Function to fetch recommendations from Spotify based on emotion
 function fetchSpotifyRecommendations() {
   const accessToken = localStorage.getItem("spotify_access_token");
   if (!accessToken) {
@@ -164,7 +120,6 @@ function fetchSpotifyRecommendations() {
     return;
   }
 
-  // Map detected emotion to corresponding genre
   const emotionToGenreMap = {
     joy: "pop",
     sadness: "blues",
@@ -175,7 +130,6 @@ function fetchSpotifyRecommendations() {
     surprise: "experimental",
   };
 
-  // Get the corresponding genre for the detected emotion
   const seedGenres = emotionToGenreMap[emotion.toLowerCase()];
 
   if (!seedGenres) {
@@ -217,10 +171,6 @@ function fetchSpotifyRecommendations() {
     });
 }
 
-// Call this function when you want to fetch recommendations based on the detected emotion
 function fetchRecommendationsBasedOnEmotion() {
-  // Replace 'yourDetectedEmotion' with the actual variable containing the detected emotion
   fetchSpotifyRecommendations(yourDetectedEmotion);
 }
-
-// joy, sadness, disgust, contempt, anger, fear, surprise
