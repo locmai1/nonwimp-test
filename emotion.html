@@ -16,14 +16,6 @@
         background-color: #242424;
       }
 
-      .left-half {
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-      }
-
       section {
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -58,12 +50,12 @@
         height: 100%;
       }
 
-      #affdex_elements {
-        height: 300px;
-      }
-
-      #results {
-        height: 30px;
+      .container {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
       }
 
       .detection-container {
@@ -73,21 +65,21 @@
     </style>
   </head>
   <body>
-    <div class="left-half">
+    <div class="container">
       <section class="detection-container">
         <p>
           <strong>Instructions</strong><br /><br />
           Press the start button to start the detector.<br />
           Press the stop button to end the detector.
         </p>
-        <button id="start" onclick="onStart()">Start</button>
-        <button id="stop" onclick="onStop()">Stop</button>
+        <button onclick="onStart()">Start</button>
+        <button onclick="onStop()">Stop</button>
 
-        <div id="affdex_elements"></div>
+        <div id="affdex_elements" style="height: 300px"></div>
         <strong>Top Emotion</strong>
         <br />
         <br />
-        <div id="results"></div>
+        <div id="results" style="height: 30px"></div>
 
         <button
           id="spotifyRecommendationsBtn"
