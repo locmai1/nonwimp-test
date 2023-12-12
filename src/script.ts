@@ -1,5 +1,5 @@
-// const clientId = "d2a8ebf8eb404bf99c359f1750373f54"; // LOC MAI BALLS
-const clientId = "ce688dc38ebd4048bd897ab33551b980"; // TLAI
+const clientId = "d2a8ebf8eb404bf99c359f1750373f54";
+// const clientId = "ce688dc38ebd4048bd897ab33551b980";
 
 window.onload = async () => {
   let accessToken = localStorage.getItem("spotify_access_token");
@@ -10,7 +10,7 @@ window.onload = async () => {
 
     if (code) {
       try {
-        accessToken = await getAccessToken(clientId, code); // Await the accessToken
+        accessToken = await getAccessToken(clientId, code);
         localStorage.setItem("spotify_access_token", accessToken);
         window.location.href = "/emotion.html";
       } catch (error) {
@@ -32,7 +32,6 @@ window.onload = async () => {
   if (accessToken) {
     try {
       document.getElementById("profile")!.style.display = "flex";
-      // document.getElementById("generator")!.style.display = "flex";
       document.getElementById("loginSection")!.style.display = "none";
     } catch (error) {
       console.error("Error fetching profile:", error);

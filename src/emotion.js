@@ -13,6 +13,8 @@ window.onload = function () {
 
   const accessToken = localStorage.getItem("spotify_access_token");
   if (!accessToken) {
+    localStorage.removeItem("spotify_access_token");
+    localStorage.removeItem("spotify_refresh_token");
     window.location.href = "/";
     return;
   }
@@ -99,18 +101,26 @@ window.onload = function () {
 
 function onStart() {
   if (detector && !detector.isRunning) {
+    var elems = document.getElementsByClassName("card-container");
+    for (var i = 0; i < elems.length; i += 1) {
+      elems[i].style.display = "none";
+    }
     document.getElementById("results").innerHTML = "";
     detector.start();
   }
-  console.log("Clicked the start button");
+  document.getElementById("spotifyRecommendationsBtn").disabled = false;
 }
 
 function onStop() {
-  console.log("Clicked the stop button");
   if (detector && detector.isRunning) {
+    var elems = document.getElementsByClassName("card-container");
+    for (var i = 0; i < elems.length; i += 1) {
+      elems[i].style.display = "none";
+    }
     detector.removeEventListener();
     detector.stop();
   }
+  document.getElementById("spotifyRecommendationsBtn").disabled = true;
 }
 
 function fetchSpotifyRecommendations() {
@@ -132,7 +142,7 @@ function fetchSpotifyRecommendations() {
 
   const seedGenres = emotionToGenreMap[emotion.toLowerCase()];
 
-  if (!seedGenres) {
+  if (!seedGenres || seedGenres == "") {
     console.error("No corresponding genre found for the detected emotion.");
     return;
   }
@@ -150,6 +160,10 @@ function fetchSpotifyRecommendations() {
     .then((response) => response.json())
     .then((data) => {
       console.log("Spotify recommendations:", data);
+      var elems = document.getElementsByClassName("card-container");
+      for (var i = 0; i < elems.length; i += 1) {
+        elems[i].style.display = "block";
+      }
       document.getElementById("card1-title").innerHTML = data.tracks[0].name;
       document.getElementById("card2-title").innerHTML = data.tracks[1].name;
       document.getElementById("card3-title").innerHTML = data.tracks[2].name;

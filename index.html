@@ -1,19 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="src/style.css" />
-  <script src="src/script.ts" type="module"></script>
-  <title>FaceTracks</title>
-</head>
-<body>
-  <section id="loginSection">
-    <div>
-      <h2>FaceTracks</h2>
-      <button id="loginButton">Login with Spotify</button>
-    </div>
-  </section>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="src/script.ts" type="module"></script>
+    <title>FaceTracks</title>
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        place-items: center;
+        min-height: 100vh;
+        flex-direction: column;
+        color: rgba(255, 255, 255, 0.87);
+        background-color: #242424;
+        font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+        line-height: 1.5;
+        font-weight: 400;
+      }
+      section {
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 90%;
+        max-width: 400px;
+      }
+      button {
+        border-radius: 8px;
+        border: 1px solid transparent;
+        padding: 0.6em 1.2em;
+        font-size: 1em;
+        font-weight: 500;
+        font-family: inherit;
+        background-color: #1a1a1a;
+        color: white;
+        cursor: pointer;
+        transition: border-color 0.25s;
+      }
+      button:hover {
+        border-color: #646cff;
+      }
+      #loginSection {
+        margin: auto;
+        width: 80%;
+        text-align: center;
+        align-items: center;
+        background-color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <section id="loginSection">
+      <div>
+        <h2>FaceTracks</h2>
+        <button id="loginButton">Login with Spotify</button>
+      </div>
+    </section>
+  </body>
 </html>
