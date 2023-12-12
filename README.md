@@ -25,6 +25,8 @@ Features
 How to Use
 ----------
 
+- Setup: Clone the repo and perform 'npm install' on the directory
+- Start: Run the 'npm run dev' command to start the application
 - Login: Use your Spotify credentials to log in by clicking on the 'Login' button and allowing permissions.
 - Start Emotion Detection: Press the 'Start' button to initiate facial emotion detection.
 - Generate Song Recommendations: Click on 'Get Spotify Recommendations' to fetch songs from Spotify based on your current emotion.
